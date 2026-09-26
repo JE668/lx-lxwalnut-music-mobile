@@ -142,6 +142,32 @@ jobs:
           echo $MYAPP_KEYSTORE_BASE64 | base64 --decode > app/${MYAPP_UPLOAD_STORE_FILE}
           chmod +x ./gradlew
       
+      - name: Convert PKCS12 to JKS
+        env:
+          MYAPP_UPLOAD_STORE_FILE: ${{ secrets.MYAPP_UPLOAD_STORE_FILE }}
+          MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.MYAPP_UPLOAD_KEY_ALIAS }}
+          MYAPP_UPLOAD_STORE_PASSWORD: ${{ secrets.MYAPP_UPLOAD_STORE_PASSWORD }}
+          MYAPP_UPLOAD_KEY_PASSWORD: ${{ secrets.MYAPP_UPLOAD_KEY_PASSWORD }}
+        run: |
+          cd android
+          # 查看 PKCS12 的别名
+          keytool -list -v -keystore app/${MYAPP_UPLOAD_STORE_FILE} -storetype PKCS12 -storepass ${MYAPP_UPLOAD_STORE_PASSWORD} 2>&1 | head -20 || echo "Failed to list keystore"
+          
+          # 转换为 JKS 格式
+          keytool -importkeystore \
+            -srckeystore app/${MYAPP_UPLOAD_STORE_FILE} \
+            -srcstoretype PKCS12 \
+            -srcstorepass ${MYAPP_UPLOAD_STORE_PASSWORD} \
+            -destkeystore app/app-release.jks \
+            -deststoretype JKS \
+            -deststorepass ${MYAPP_UPLOAD_STORE_PASSWORD} \
+            -destkeypass ${MYAPP_UPLOAD_KEY_PASSWORD} \
+            -alias ${MYAPP_UPLOAD_KEY_ALIAS} \
+            -noprompt || echo "Conversion failed, using PKCS12 directly"
+          
+          # 更新 store file 为 JKS
+          echo "MYAPP_UPLOAD_STORE_FILE=app-release.jks" >> $GITHUB_ENV
+      
       - name: Build Release APK
         env:
           MYAPP_UPLOAD_STORE_FILE: ${{ secrets.MYAPP_UPLOAD_STORE_FILE }}
