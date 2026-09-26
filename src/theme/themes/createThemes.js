@@ -309,6 +309,44 @@ const defaultThemes = [
       'c-liked': '#ef4444',
     },
   },
+  {
+    id: 'alger_dark',
+    name: 'Alger 暗黑',
+    isDark: true,
+    config: {
+      primary: 'rgb(108, 92, 231)',
+      font: 'rgb(255, 255, 255)',
+      'c-app-background': '#0f0f1a',
+      'c-main-background': '#1a1a2e',
+      'bg-image': '',
+      'bg-image-position': 'center',
+      'bg-image-size': 'cover',
+
+      'c-badge-primary': '#6c5ce7',
+      'c-badge-secondary': '#a29bfe',
+      'c-badge-tertiary': '#74b9ff',
+      'c-liked': '#ff6b6b',
+    },
+  },
+  {
+    id: 'alger_light',
+    name: 'Alger 亮色',
+    isDark: false,
+    config: {
+      primary: 'rgb(108, 92, 231)',
+      font: 'rgb(26, 26, 46)',
+      'c-app-background': '#f8f9fa',
+      'c-main-background': 'rgba(255, 255, 255, 0.9)',
+      'bg-image': '',
+      'bg-image-position': 'center',
+      'bg-image-size': 'cover',
+
+      'c-badge-primary': '#6c5ce7',
+      'c-badge-secondary': '#a29bfe',
+      'c-badge-tertiary': '#74b9ff',
+      'c-liked': '#ff6b6b',
+    },
+  },
 ]
 
 const themes = defaultThemes.map(({ config: { primary, font, ...extInfo }, ...themeInfo }) => {
