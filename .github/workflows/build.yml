@@ -187,7 +187,26 @@ jobs:
         run: |
           APK_NAME="lx-music-v${PACKAGE_VERSION}-${{ matrix.abi }}.apk"
           cd android/app/build/outputs/apk/release
-          mv app-release.apk "${APK_NAME}"
+          # 查找实际的 APK 文件（分架构构建）
+          if [ "${{ matrix.abi }}" = "universal" ]; then
+            SRC_APK="app-release.apk"
+          else
+            SRC_APK="app-${{ matrix.abi }}-release.apk"
+          fi
+          echo "Looking for: $SRC_APK"
+          ls -la *.apk
+          if [ -f "$SRC_APK" ]; then
+            mv "$SRC_APK" "${APK_NAME}"
+          else
+            # 尝试匹配第一个 APK
+            FIRST_APK=$(ls *.apk | head -1)
+            if [ -n "$FIRST_APK" ]; then
+              mv "$FIRST_APK" "${APK_NAME}"
+            else
+              echo "No APK found!"
+              exit 1
+            fi
+          fi
           echo "apk_names=${APK_NAME}" >> "$GITHUB_OUTPUT"
       
       - name: Generate MD5 & SHA256
