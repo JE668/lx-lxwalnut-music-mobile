@@ -222,10 +222,10 @@ jobs:
         with:
           name: apk-${{ matrix.abi }}
           path: |
-            android/app/build/outputs/apk/release/lx-music-v${PACKAGE_VERSION}-${{ matrix.abi }}.apk
-            android/app/build/outputs/apk/release/md5sums.txt
-            android/app/build/outputs/apk/release/sha256sums.txt
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/apk/release/*.txt
           retention-days: 30
+          if-no-files-found: error
 
   # ============================================
   # Job 3: 发布 GitHub Release
