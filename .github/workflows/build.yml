@@ -237,6 +237,9 @@ jobs:
     if: ${{ github.event_name == 'push' || inputs.is_release == true }}
     permissions:
       contents: write
+    env:
+      PACKAGE_VERSION: ${{ needs.setup.outputs.package_version }}
+      PACKAGE_CODE: ${{ needs.setup.outputs.package_code }}
     outputs:
       release_tag: ${{ steps.tag.outputs.release_tag }}
     steps:
@@ -260,19 +263,30 @@ jobs:
       
       - name: Generate release body
         run: |
-          # 从 changelog 提取本次更新
-          if [ -f "./publish/changeLog.md" ]; then
-            awk 'BEGIN{RS="---"}{if(NR==1)print $0}' ./publish/changeLog.md > RELEASE_NOTES.md
-          else
-            echo "# 更新日志" > RELEASE_NOTES.md
-          fi
-          
-          # 添加构建信息
-          echo -e "\n## 构建信息" >> RELEASE_NOTES.md
-          echo "- 版本: v${PACKAGE_VERSION} (${PACKAGE_CODE})" >> RELEASE_NOTES.md
-          echo "- 构建时间: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> RELEASE_NOTES.md
-          echo "- Commit: ${GITHUB_SHA}" >> RELEASE_NOTES.md
-          echo "- 分支: ${GITHUB_REF_NAME}" >> RELEASE_NOTES.md
+          # 使用我们自己的更新说明
+          echo "# LX Music v${PACKAGE_VERSION}" > RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "## 车机优化版 - 极氪 7X 专用" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### 新增功能" >> RELEASE_NOTES.md
+          echo "- ✅ Alger 暗黑/亮色主题（紫色 #6c5ce7 主色调）" >> RELEASE_NOTES.md
+          echo "- ✅ 车机横屏播放器（三栏布局：播放列表/播放器/歌词）" >> RELEASE_NOTES.md
+          echo "- ✅ 音质选择器（自动降级、fallback 机制）" >> RELEASE_NOTES.md
+          echo "- ✅ 后台保活、网络监控、播放错误处理" >> RELEASE_NOTES.md
+          echo "- ✅ 方向盘控制播放支持" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### 车机优化" >> RELEASE_NOTES.md
+          echo "- 🚗 后台保活：防止系统杀死应用" >> RELEASE_NOTES.md
+          echo "- 📶 网络监控：网络恢复自动重连" >> RELEASE_NOTES.md
+          echo "- 🎵 播放错误处理：播放失败自动重试" >> RELEASE_NOTES.md
+          echo "- 🎨 Alger 主题：紫色系现代 UI" >> RELEASE_NOTES.md
+          echo "- 📱 横屏播放器：适合车机大屏使用" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### 构建信息" >> RELEASE_NOTES.md
+          echo "- **版本:** v${PACKAGE_VERSION} (${PACKAGE_CODE})" >> RELEASE_NOTES.md
+          echo "- **构建时间:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> RELEASE_NOTES.md
+          echo "- **Commit:** ${GITHUB_SHA}" >> RELEASE_NOTES.md
+          echo "- **分支:** ${GITHUB_REF_NAME}" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
           
           # 查找所有 APK 文件
