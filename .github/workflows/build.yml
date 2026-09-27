@@ -248,6 +248,15 @@ jobs:
         with:
           path: ./artifacts
           merge-multiple: true
+        continue-on-error: true
+      
+      - name: Debug artifacts
+        run: |
+          echo "Artifacts directory contents:"
+          ls -laR ./artifacts
+          echo ""
+          echo "Looking for APK files:"
+          find ./artifacts -name "*.apk" -type f
       
       - name: Generate release body
         run: |
@@ -266,12 +275,24 @@ jobs:
           echo "- 分支: ${GITHUB_REF_NAME}" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
           
+          # 查找所有 APK 文件
+          APK_FILES=$(find ./artifacts -name "*.apk" -type f)
+          if [ -z "$APK_FILES" ]; then
+            echo "Warning: No APK files found in artifacts!"
+            echo "Available files:"
+            find ./artifacts -type f
+          fi
+          
           # 添加 MD5
           echo "## 文件校验" >> RELEASE_NOTES.md
           echo '```' >> RELEASE_NOTES.md
-          cd artifacts
-          md5sum *.apk >> ../RELEASE_NOTES.md
-          cd ..
+          if [ -n "$APK_FILES" ]; then
+            echo "$APK_FILES" | while read -r apk; do
+              echo "$(basename $apk): $(md5sum $apk | cut -d' ' -f1)" >> RELEASE_NOTES.md
+            done
+          else
+            echo "No APK files found" >> RELEASE_NOTES.md
+          fi
           echo '```' >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
           
