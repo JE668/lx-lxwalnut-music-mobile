@@ -356,7 +356,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "v${PACKAGE_VERSION}"
+          name: "LX Music v${{ needs.setup.outputs.package_version }} - 车机优化版"
           body_path: RELEASE_NOTES.md
           prerelease: ${{ steps.tag.outputs.release_prerelease }}
           draft: false
