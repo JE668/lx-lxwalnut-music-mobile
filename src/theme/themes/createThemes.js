@@ -314,18 +314,26 @@ const defaultThemes = [
     name: 'Alger 暗黑',
     isDark: true,
     config: {
-      primary: 'rgb(108, 92, 231)',
-      font: 'rgb(255, 255, 255)',
-      'c-app-background': '#0f0f1a',
-      'c-main-background': '#1a1a2e',
+      // Alger Music 风格的紫色系
+      primary: '#6c5ce7',
+      font: 'rgba(255, 255, 255, 0.95)',
+      // 深色渐变背景（Alger 标志性）
+      'c-app-background': 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)',
+      'c-main-background': 'rgba(26, 26, 46, 0.85)',
       'bg-image': '',
       'bg-image-position': 'center',
       'bg-image-size': 'cover',
 
+      // Alger Music 风格配色
       'c-badge-primary': '#6c5ce7',
       'c-badge-secondary': '#a29bfe',
       'c-badge-tertiary': '#74b9ff',
       'c-liked': '#ff6b6b',
+
+      // Alger 特色：毛玻璃效果背景
+      'c-card-background': 'rgba(255, 255, 255, 0.08)',
+      'c-card-border': 'rgba(255, 255, 255, 0.12)',
+      'c-shadow-color': 'rgba(108, 92, 231, 0.3)',
     },
   },
   {
@@ -333,18 +341,74 @@ const defaultThemes = [
     name: 'Alger 亮色',
     isDark: false,
     config: {
-      primary: 'rgb(108, 92, 231)',
-      font: 'rgb(26, 26, 46)',
-      'c-app-background': '#f8f9fa',
-      'c-main-background': 'rgba(255, 255, 255, 0.9)',
+      // Alger Music 风格的紫色系
+      primary: '#6c5ce7',
+      font: 'rgba(26, 26, 46, 0.95)',
+      // 亮色渐变背景
+      'c-app-background': 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f0f7 100%)',
+      'c-main-background': 'rgba(255, 255, 255, 0.92)',
       'bg-image': '',
       'bg-image-position': 'center',
       'bg-image-size': 'cover',
 
+      // Alger Music 风格配色
       'c-badge-primary': '#6c5ce7',
       'c-badge-secondary': '#a29bfe',
       'c-badge-tertiary': '#74b9ff',
       'c-liked': '#ff6b6b',
+
+      // Alger 特色：毛玻璃效果背景
+      'c-card-background': 'rgba(255, 255, 255, 0.7)',
+      'c-card-border': 'rgba(108, 92, 231, 0.15)',
+      'c-shadow-color': 'rgba(108, 92, 231, 0.2)',
+    },
+  },
+  {
+    id: 'alger_purple',
+    name: 'Alger 紫罗兰',
+    isDark: true,
+    config: {
+      // 深紫色渐变（Alger 标志性）
+      primary: '#a29bfe',
+      font: 'rgba(255, 255, 255, 0.95)',
+      'c-app-background': 'linear-gradient(135deg, #1a0033 0%, #2d1b4e 50%, #1a1a2e 100%)',
+      'c-main-background': 'rgba(45, 27, 78, 0.85)',
+      'bg-image': '',
+      'bg-image-position': 'center',
+      'bg-image-size': 'cover',
+
+      'c-badge-primary': '#a29bfe',
+      'c-badge-secondary': '#6c5ce7',
+      'c-badge-tertiary': '#fd79a8',
+      'c-liked': '#ff7675',
+
+      'c-card-background': 'rgba(162, 155, 254, 0.1)',
+      'c-card-border': 'rgba(162, 155, 254, 0.2)',
+      'c-shadow-color': 'rgba(162, 155, 254, 0.4)',
+    },
+  },
+  {
+    id: 'alger_ocean',
+    name: 'Alger 深海',
+    isDark: true,
+    config: {
+      // 深蓝色渐变（Alger 海洋主题）
+      primary: '#74b9ff',
+      font: 'rgba(255, 255, 255, 0.95)',
+      'c-app-background': 'linear-gradient(135deg, #0a1628 0%, #0d2137 50%, #1a3a52 100%)',
+      'c-main-background': 'rgba(13, 33, 55, 0.85)',
+      'bg-image': '',
+      'bg-image-position': 'center',
+      'bg-image-size': 'cover',
+
+      'c-badge-primary': '#74b9ff',
+      'c-badge-secondary': '#0984e3',
+      'c-badge-tertiary': '#00cec9',
+      'c-liked': '#ff7675',
+
+      'c-card-background': 'rgba(116, 185, 255, 0.08)',
+      'c-card-border': 'rgba(116, 185, 255, 0.15)',
+      'c-shadow-color': 'rgba(116, 185, 255, 0.3)',
     },
   },
 ]
